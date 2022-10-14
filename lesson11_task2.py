@@ -3,12 +3,9 @@ import json
 
 
 def load_func(phone_book):
-    try:
         with open(phone_book) as f:
             data = json.load(f)
         return data
-    except:
-        print('No such phonebook')
 
 
 def add_new(data):
@@ -51,33 +48,35 @@ def update_data(data, phone):
 
 if __name__ == '__main__':
     phone_book = 'phonebook.json'
-    data = load_func(phone_book)
-    while True:
-        print(data)
-        choise = int(input('What do you want to do? \n1 Add new entries \n2 Search by info about user \n'
-              '3 Delete a record for a given telephone number \n4 Update a record for a given telephone number \n'
-              '5 for exit the program\nCHOISE: '))
-        if choise == 5:
-            close_app(data)
-            break
-        elif choise == 1:
-            add_new(data)
+    try:
+        data = load_func(phone_book)
+        while True:
             print(data)
-        elif choise == 2:
-            searched = search(data)
-            if searched == []:
-                print('No such data yet')
-            else:
-                print(searched)
-        elif choise == 3:
-            phone = input('Please, write the phone: ')
-            try:
-                delete_data(data, phone)
-            except:
-                print('No such phone')
-        elif choise == 4:
-            phone = input('Please, write the phone: ')
-            try:
-                update_data(data, phone)
-            except:
-                print('No such phone')
+            choise = int(input('What do you want to do? \n1 Add new entries \n2 Search by info about user \n'
+                  '3 Delete a record for a given telephone number \n4 Update a record for a given telephone number \n'
+                  '5 for exit the program\nCHOISE: '))
+            if choise == 5:
+                close_app(data)
+                break
+            elif choise == 1:
+                add_new(data)
+            elif choise == 2:
+                searched = search(data)
+                if searched == []:
+                    print('No such data yet')
+                else:
+                    print(searched)
+            elif choise == 3:
+                phone = input('Please, write the phone: ')
+                try:
+                    delete_data(data, phone)
+                except:
+                    print('No such phone')
+            elif choise == 4:
+                phone = input('Please, write the phone: ')
+                try:
+                    update_data(data, phone)
+                except:
+                    print('No such phone')
+    except:
+        print('No such phonebook! Exit programm')
