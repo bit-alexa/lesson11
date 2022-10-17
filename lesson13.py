@@ -7,7 +7,9 @@ def fun():
 def num_locals(fun):
     return fun.__code__.co_nlocals
 
+
 print('Task 1:', num_locals(fun))
+
 
 #Task 2
 #Write a Python program to access a function inside a function (Tips: use function, which returns another function)'''
@@ -17,6 +19,7 @@ def func2(a, b):
 
 def func3():
     return func2
+
 
 print('Task 2: ', func3()(3,4))
 
