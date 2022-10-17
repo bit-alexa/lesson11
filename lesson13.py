@@ -1,144 +1,48 @@
-'''Task 1
-Write a decorator that prints a function with arguments passed to it.
-NOTE! It should print the function, not the result of its execution!
-For example:
-add called with 4, 5'''
+#Task 1
+def fun():
+    a = 1
+    str = 'GeeksForGeeks'
 
-# def logger(func):
-#     def wrapper(*args, **kwargs):
-#         print(func.__name__, 'called with ', *args, **kwargs)
-#         return func(*args, **kwargs)
-#     return wrapper
-#
-#
-# @logger
-# def add(x, y):
-#     return x + y
-#
-#
-# @logger
-# def square_all(*args):
-#     return [arg ** 2 for arg in args]
-#
-#
-# add(4,5)
-#
-# def func1():
-#     def func2():
-#         print('func2')
-#     return func2
+def num_locals(fun):
+    return fun.__code__.co_nlocals
 
-'''Write a decorator that takes a list of stop words and replaces them with * inside the decorated function'''
+print('Task 1:', num_locals(fun))
+
+#Task 2
+#Write a Python program to access a function inside a function (Tips: use function, which returns another function)'''
+
+def func2(a, b):
+    return a +b
+
+def func3():
+    return func2
+
+print('Task 2: ', func3()(3,4))
+
+#Task3
+
+nums1 = [1, 2, 3, 4, 5]
+nums2 = [1, -2, 3, -4, 5]
 
 
-# def stop_words(words: list):
-#     def decor(f):
-#         def wrapper(*args, **kwargs):
-#             res = f(*args, **kwargs)
-#             for i in words:
-#                 res = res.replace(i, '*')
-#             return res
-#         return wrapper
-#     return decor
-#
-#
-# @stop_words(['pepsi', 'BMW'])
-# def create_slogan(name: str) -> str:
-#     return f"{name} drinks pepsi in his brand new BMW!"
-#
-#
-# assert create_slogan("Steve") == "Steve drinks * in his brand new *!"
-
-Task
-3
-
-Write
-a
-decorator
-`arg_rules`
-that
-validates
-arguments
-passed
-to
-the
-function.
-
-A
-decorator
-should
-take
-3
-arguments:
-
-max_length: 15
-
-type_: str
-
-contains: [] - list
-of
-symbols
-that
-an
-argument
-should
-contain
-
-If
-some
-of
-the
-rules
-' checks returns False, the function should return False and print the reason it failed; otherwise, return the result.
-
-```
+def square_nums(nums):
+    return [num ** 2 for num in nums]
 
 
-def arg_rules(type_: type, max_length: int, contains: list):
-    pass
+def remove_negatives(nums):
+    return [num for num in nums if num > 0]
 
 
-@arg_rules(type_=str, max_length=15, contains=['05', '@'])
-def create_slogan(name: str) -> str:
-    return f"{name} drinks pepsi in his brand new BMW!"
+def choose_func(nums: list, func1=square_nums, func2=remove_negatives):
+    count = True
+    for num in nums:
+        if num < 0:
+            count = False
+    if count:
+        return func1(nums)
+    else:
+        return func2(nums)
 
 
-assert create_slogan('johndoe05@gmail.com') is False
-
-assert create_slogan('S@SH05') == 'S@SH05 drinks pepsi in his brand new BMW!'
-
-'''Task 3
-
-Write a decorator `arg_rules` that validates arguments passed to the function.
-
-A decorator should take 3 arguments:
-
-max_length: 15
-
-type_: str
-
-contains: [] - list of symbols that an argument should contain
-
-If some of the rules' checks returns False, the function should return False and print the reason it failed; otherwise, return the result.
-
-```
-
-def arg_rules(type_: type, max_length: int, contains: list):
-
-    pass
-
- 
-
-@arg_rules(type_=str, max_length=15, contains=['05', '@'])
-
-def create_slogan(name: str) -> str:
-
-    return f"{name} drinks pepsi in his brand new BMW!"
-
- 
-
-assert create_slogan('johndoe05@gmail.com') is False
-
-assert create_slogan('S@SH05') == 'S@SH05 drinks pepsi in his brand new BMW!'
-
-'''
+assert choose_func(nums1, square_nums, remove_negatives) == [1, 4, 9, 16, 25]
+assert choose_func(nums2, square_nums, remove_negatives) == [1, 3, 5]
