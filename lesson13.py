@@ -3,6 +3,7 @@ def fun():
     a = 1
     str = 'GeeksForGeeks'
 
+
 def num_locals(fun):
     return fun.__code__.co_nlocals
 
